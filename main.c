@@ -18,7 +18,7 @@
 #include "image.h"
 #include "weights.h"
 
-#define APP_STACK_SIZE_BYTES		(512 / 4)
+#define APP_STACK_SIZE_BYTES		(1024 / 4)
 
 /// <summary>Base address of IO CM4 MCU Core clock.</summary>
 static const uintptr_t IO_CM4_RGU = 0x2101000C;
@@ -67,6 +67,10 @@ __attribute__((used)) = {
 
 static _Noreturn void DefaultExceptionHandler(void)
 {
+	_putchar('H'); _putchar('a'); _putchar('r'); _putchar('d');
+	_putchar('F'); _putchar('a'); _putchar('u'); _putchar('l'); _putchar('t');
+	_putchar('\n');
+
     for (;;) {
         // empty.
     }
@@ -125,9 +129,8 @@ static void UARTTask(void* pParameters)
 
 	while (1) {
 		xQueueReceive(UARTDataQueue, &c, portMAX_DELAY);
-		NNOM_LOG("%c", c);
 		if ((c >= '0') && (c <= '9')) {
-			xTaskNotify(NNTaskHandle, c, eSetValueWithOverwrite);
+			xTaskNotify(NNTaskHandle, (c - '0'), eSetValueWithOverwrite);
 		}
 	}
 }
@@ -164,7 +167,7 @@ static void NNTask(void* pParameters)
 		
 		xTaskNotifyWait(0, UINT32_MAX, &index, portMAX_DELAY);
 
-		NNOM_LOG("\nprediction start...\n");
+		NNOM_LOG("\nprediction start on img[%d]...\n", index);
 		time = nnom_ms_get();
 
 		// copy data and do prediction
@@ -181,7 +184,6 @@ static void NNTask(void* pParameters)
 		NNOM_LOG("Probability: %d%%\n", (int)(prob * 100));
 
 		model_stat(model);
-		NNOM_LOG("Total Memory cost (Network and NNoM): %d\n", nnom_mem_stat());
 	}
 }
 
@@ -220,12 +222,12 @@ static _Noreturn void RTCoreMain(void)
 
 void vApplicationStackOverflowHook(TaskHandle_t xTask, char* pcTaskName)
 {
-	;
+	while (1);
 }
 
 void vApplicationMallocFailedHook(void)
 {
-	;
+	while (1);
 }
 
 void _putchar(char character)
