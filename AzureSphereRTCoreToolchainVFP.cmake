@@ -43,7 +43,7 @@ ELSE()
 ENDIF()
 
 SET(CMAKE_C_FLAGS_INIT "-mthumb -mcpu=cortex-m4 -mfloat-abi=hard -mfpu=fpv4-sp-d16")
-SET(CMAKE_EXE_LINKER_FLAGS_INIT "-nostartfiles -Wl,--no-undefined -Wl,-n -T \"${CMAKE_SOURCE_DIR}/linker.ld\" -Xlinker -Map=${PROJECT_NAME}.map")
+SET(CMAKE_EXE_LINKER_FLAGS_INIT "-fdata-sections -ffunction-sections -Wl,--gc-sections -nostartfiles -Wl,--no-undefined -Wl,-n -T \"${CMAKE_SOURCE_DIR}/linker.ld\" -Xlinker -Map=${PROJECT_NAME}.map")
 
 FILE(GLOB ARM_GNU_INCLUDE_PATH "${ARM_GNU_BASE_PATH}/lib/gcc/arm-none-eabi/*/include")
 SET(CMAKE_C_STANDARD_INCLUDE_DIRECTORIES "${ARM_GNU_INCLUDE_PATH}" "${ARM_GNU_BASE_PATH}/arm-none-eabi/include")
