@@ -201,7 +201,8 @@ static _Noreturn void RTCoreMain(void)
     WriteReg32(SCB_BASE, 0x08, (uint32_t)ExceptionVectorTable);
 
 	DebugUARTInit();
-	printf("nnom minist-simple demo on Azure Sphere RTcore\r\n");
+	printf("\NNOM MINST-simple demo on Azure Sphere RTcore\n");
+	printf("Input number 0 - 9 to feed img[0] - img[9] from test dataset to pre-generated model\n");
 
 	ISU0Init();
 	UARTDataQueue = xQueueCreate(10, sizeof(uint8_t));

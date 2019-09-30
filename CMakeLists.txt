@@ -2,7 +2,7 @@
 #  Licensed under the MIT License.
 
 CMAKE_MINIMUM_REQUIRED(VERSION 3.11)
-PROJECT(Azure_Sphere_RTcore_FreeRTOS C)
+PROJECT(Azure_Sphere_RTcore_NNOM_MINST_Simple C)
 
 # include
 include_directories(${CMAKE_SOURCE_DIR} 
