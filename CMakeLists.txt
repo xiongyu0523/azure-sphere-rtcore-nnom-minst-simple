@@ -16,7 +16,6 @@ include_directories(${CMAKE_SOURCE_DIR}
 
 # global macro
 add_compile_definitions(ARM_MATH_DSP)
-add_compile_definitions(ARM_MATH_LOOPUNROLL)
 add_compile_definitions(__FPU_PRESENT=1U)
 
 # Create executable
