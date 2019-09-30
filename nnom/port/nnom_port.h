@@ -28,7 +28,7 @@
 #define nnom_memset(p,v,s)  memset(p,v,s)
 
 // runtime & debuges
-#define nnom_us_get()       0
+#define nnom_us_get()       GetCurrentUs()
 #define nnom_ms_get()       xTaskGetTickCount()
 #define NNOM_LOG(...)       printf(__VA_ARGS__)
 
@@ -42,7 +42,7 @@
                                     // CHW must be used when using hardware accelerator such as KPU in K210 chip
 
 // Backend selection
-#define NNOM_USING_CMSIS_NN       // uncomment if use CMSIS-NN for optimation 
+//#define NNOM_USING_CMSIS_NN       // uncomment if use CMSIS-NN for optimation 
 
 
 #endif

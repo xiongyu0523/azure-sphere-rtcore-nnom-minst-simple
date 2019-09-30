@@ -24,6 +24,7 @@
 static const uintptr_t IO_CM4_RGU = 0x2101000C;
 static const uintptr_t IO_CM4_DEBUGUART = 0x21040000;
 static const uintptr_t IO_CM4_ISU0 = 0x38070500;
+static const uintptr_t IO_CM4_GPT_BASE = 0x21030000;
 static QueueHandle_t UARTDataQueue;
 static TaskHandle_t NNTaskHandle;
 
@@ -75,6 +76,24 @@ static _Noreturn void DefaultExceptionHandler(void)
         // empty.
     }
 }
+
+void GPT3UsFreeRunTimerInit()
+{
+	// GPT3_INIT = initial counter value
+	WriteReg32(IO_CM4_GPT_BASE, 0x54, 0x0);
+
+	// GPT3_CTRL
+	uint32_t ctrlOn = 0x0;
+	ctrlOn |= (0x19) << 16; // OSC_CNT_1US (default value)
+	ctrlOn |= 0x1;          // GPT3_EN = 1 -> GPT3 enabled
+	WriteReg32(IO_CM4_GPT_BASE, 0x50, ctrlOn);
+}
+
+uint32_t GetCurrentUs()
+{
+	return ReadReg32(IO_CM4_GPT_BASE, 0x58);
+}
+
 
 static void ISU0_ISR(void)
 {
@@ -204,6 +223,7 @@ static _Noreturn void RTCoreMain(void)
 	printf("\NNOM MINST-simple demo on Azure Sphere RTcore\n");
 	printf("Input number 0 - 9 to feed img[0] - img[9] from test dataset to pre-generated model\n");
 
+	GPT3UsFreeRunTimerInit();
 	ISU0Init();
 	UARTDataQueue = xQueueCreate(10, sizeof(uint8_t));
 
