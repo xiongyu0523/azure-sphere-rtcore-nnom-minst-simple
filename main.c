@@ -18,7 +18,7 @@
 #include "image.h"
 #include "weights.h"
 
-#define APP_STACK_SIZE_BYTES		(1024 / 4)
+#define APP_STACK_SIZE_BYTES		(2048 / 4)
 
 /// <summary>Base address of IO CM4 MCU Core clock.</summary>
 static const uintptr_t IO_CM4_RGU = 0x2101000C;

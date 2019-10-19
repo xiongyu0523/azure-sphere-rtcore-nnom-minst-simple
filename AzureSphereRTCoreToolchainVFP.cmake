@@ -39,7 +39,7 @@ SET(CMAKE_FIND_ROOT_PATH "${ARM_GNU_BASE_PATH}")
 IF(${CMAKE_HOST_WIN32})
     SET(CMAKE_C_COMPILER "${ARM_GNU_BIN_PATH}/arm-none-eabi-gcc.exe" CACHE INTERNAL "Path to the C compiler in the ARM embedded toolset targeting Real-Time Core")
 ELSE()
-    MESSAGE(FATAL_ERROR "Building on non-Windows is not yet supported")
+    SET(CMAKE_C_COMPILER "${ARM_GNU_BIN_PATH}/arm-none-eabi-gcc" CACHE INTERNAL "Path to the C compiler in the ARM embedded toolset targeting Real-Time Core")
 ENDIF()
 
 SET(CMAKE_C_FLAGS_INIT "-mthumb -mcpu=cortex-m4 -mfloat-abi=hard -mfpu=fpv4-sp-d16")
